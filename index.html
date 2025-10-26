@@ -1,0 +1,1101 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PalmVision - AI untuk Identifikasi Hama/Gulma Kelapa Sawit</title>
+  <link rel="icon" href="assets/Logo.png">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --green: #3b7a57;
+      --green-light: #a8d5ba;
+      --yellow: #ffcc00;
+      --bg: #f7faf8;
+      --text: #1f2937;
+      --border: #e5e7eb;
+      --card: #ffffff;
+    }
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Poppins', 'Inter', system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+      line-height: 1.6;
+      color: var(--text);
+      background: var(--bg);
+      min-height: 100vh;
+    }
+
+    /* Header & Navigation */
+    .header {
+      background: var(--green);
+      color: white;
+      padding: 0.75rem 0;
+      box-shadow: none;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      backdrop-filter: saturate(120%) blur(4px);
+    }
+
+    .nav-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo {
+      font-size: 1.25rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      letter-spacing: 0.3px;
+      color: white;
+      text-decoration: none;
+    }
+    .logo img { height: 34px; width: 34px; object-fit: contain; display: block; }
+
+    .nav-menu {
+      display: flex;
+      list-style: none;
+      gap: 2rem;
+    }
+
+    .nav-menu a {
+      color: white;
+      text-decoration: none;
+      padding: 0.55rem 0.9rem;
+      border-radius: 10px;
+      transition: background-color 0.2s ease, transform 0.2s ease;
+    }
+
+    .nav-menu a:hover, .nav-menu a:focus-visible {
+      background: rgba(255,255,255,0.15);
+      transform: translateY(-1px);
+    }
+
+    .mobile-menu-btn {
+      display: none;
+      background: none;
+      border: none;
+      color: white;
+      font-size: 1.5rem;
+      cursor: pointer;
+    }
+
+    /* Hero Section */
+    .hero {
+      background: url('assets/Banner.png') center/cover no-repeat;
+      height: 56vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      color: white;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::before { 
+      content: ''; 
+      position: absolute; 
+      inset: 0; 
+      background: rgba(0,0,0,0.35); 
+    }
+
+    /* Shimmer Effect */
+    .hero::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(255, 255, 255, 0.4),
+        transparent
+      );
+      animation: shimmer 3s infinite;
+      z-index: 1;
+    }
+
+    @keyframes shimmer {
+      0% {
+        left: -100%;
+      }
+      50% {
+        left: 100%;
+      }
+      100% {
+        left: 100%;
+      }
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      max-width: 800px;
+      padding: 0 2rem;
+    }
+
+    .hero-content h1 {
+      font-size: 3.5rem;
+      margin-bottom: 1rem;
+      text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.3);
+      animation: fadeUp 700ms ease-out both;
+      font-weight: 800;
+      letter-spacing: -0.5px;
+    }
+
+    .hero-content p {
+      font-size: 1.1rem;
+      margin-bottom: 1.5rem;
+      max-width: 680px;
+      line-height: 1.6;
+      text-shadow: none;
+      opacity: 0.95;
+      animation: fadeUp 800ms ease-out 120ms both;
+    }
+
+    .cta-button {
+      background: linear-gradient(45deg, var(--yellow), #ffed4e);
+      color: #1c2b21;
+      padding: 1.1rem 2rem;
+      border: none;
+      border-radius: 12px;
+      font-size: 1.05rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-decoration: none;
+      display: inline-block;
+      position: relative;
+      overflow: hidden;
+      animation: fadeUp 900ms ease-out 180ms both;
+      box-shadow: 0 8px 25px rgba(255, 204, 0, 0.3);
+    }
+
+    .cta-button::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+      transition: left 0.5s;
+    }
+
+    .cta-button:hover::before {
+      left: 100%;
+    }
+
+    .cta-button:hover { 
+      transform: translateY(-3px) scale(1.05); 
+      box-shadow: 0 12px 35px rgba(255, 204, 0, 0.4);
+    }
+    @keyframes fadeUp { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: translateY(0); } }
+
+    /* Main Content */
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 2rem;
+    }
+
+    .section {
+      padding: 4rem 0;
+    }
+
+    .section-title {
+      text-align: center;
+      font-size: 2.5rem;
+      color: var(--green);
+      margin-bottom: 2rem;
+      font-weight: 700;
+      letter-spacing: -0.3px;
+    }
+
+    /* Upload Section */
+    .upload-section {
+      background: linear-gradient(135deg, #ffffff 0%, #f8fffe 100%);
+      border-radius: 25px;
+      padding: 4rem;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+      margin: 3rem 0;
+      border: 1px solid rgba(74,124,89,0.1);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .upload-section::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 6px;
+      background: linear-gradient(90deg, #4a7c59, var(--green), var(--yellow));
+    }
+
+    .upload-area {
+      border: 3px dashed var(--brand-green-light);
+      border-radius: 20px;
+      padding: 4rem 3rem;
+      text-align: center;
+      background: linear-gradient(135deg, #f8fffe 0%, #f0f8f0 100%);
+      transition: all 0.4s ease;
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .upload-area::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(74,124,89,0.1), transparent);
+      transition: left 0.6s;
+    }
+
+    .upload-area:hover::before {
+      left: 100%;
+    }
+
+    .upload-area:hover { border-color: var(--green); transform: translateY(-2px); }
+
+    .upload-area.dragover { border-color: var(--yellow); background: #fffdf3; transform: scale(1.01); }
+
+    .upload-icon { font-size: 3rem; color: var(--green); margin-bottom: 0.75rem; }
+
+    .upload-text {
+      font-size: 1.4rem;
+      color: #555;
+      margin-bottom: 1.5rem;
+      font-weight: 500;
+    }
+
+    .upload-text p {
+      margin: 0.5rem 0;
+    }
+
+    .upload-text small {
+      color: #888;
+      font-size: 1rem;
+    }
+
+    .file-input {
+      display: none;
+    }
+
+    .upload-btn { 
+      background: linear-gradient(135deg, var(--green), #4a7c59); 
+      color: white; 
+      padding: 1.1rem 2rem; 
+      border: none; 
+      border-radius: 12px; 
+      font-size: 1.05rem; 
+      font-weight: 600; 
+      cursor: pointer; 
+      transition: all 0.3s ease; 
+      position: relative;
+      box-shadow: 0 4px 15px rgba(59, 122, 87, 0.3);
+    }
+
+    .upload-btn:hover { 
+      transform: translateY(-3px); 
+      box-shadow: 0 6px 25px rgba(59, 122, 87, 0.4);
+      filter: brightness(1.05);
+    }
+
+    .preview-container {
+      margin: 2rem 0;
+      text-align: center;
+    }
+
+    #preview {
+      max-width: 100%;
+      max-height: 400px;
+      border-radius: 15px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    }
+
+    .analyze-btn { background: var(--yellow); color: #1c2b21; padding: 0.9rem 1.3rem; border: none; border-radius: 10px; font-size: 1rem; font-weight: 700; cursor: pointer; transition: filter 0.2s ease, transform 0.2s ease; margin: 1rem 0; }
+
+    .analyze-btn:hover { transform: translateY(-2px); filter: brightness(0.95); }
+
+    .analyze-btn:disabled {
+      background: #ccc;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    /* Results Section */
+    .result-card { background: var(--card); border-radius: 16px; padding: 1.5rem; margin: 2rem 0; border: 1px solid var(--border); }
+
+    .result-card::before { content: ''; display: block; height: 3px; width: 100%; background: var(--green-light); border-radius: 3px; margin-bottom: 0.75rem; }
+
+    .result-card h3 { color: var(--green); margin-bottom: 0.75rem; display: flex; align-items: center; gap: 0.6rem; font-size: 1.5rem; font-weight: 700; }
+
+    .result-card h3 i { color: var(--green); font-size: 1.6rem; }
+
+    .confidence-wrap { margin: 0.75rem 0 1rem; }
+    .confidence-bar { height: 10px; background: #eef4ef; border-radius: 999px; overflow: hidden; border: 1px solid var(--border); }
+    .confidence-fill { height: 100%; background: linear-gradient(90deg, var(--green), var(--yellow)); width: 0%; transition: width 600ms ease; }
+
+    .result-item { background: #fcfffd; padding: 1rem; border-radius: 12px; border: 1px solid var(--border); }
+
+    .result-item::before { content: none; }
+
+    .result-item:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 15px 35px rgba(0,0,0,0.15);
+    }
+
+    .result-item strong { color: var(--green); display: block; margin-bottom: 0.5rem; font-size: 0.95rem; font-weight: 700; letter-spacing: 0.3px; }
+
+    .result-item p, .result-item i {
+      color: #555;
+      line-height: 1.6;
+      font-size: 1rem;
+    }
+
+    .confidence-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.5rem 1rem;
+      border-radius: 25px;
+      font-weight: 600;
+      font-size: 0.9rem;
+      margin-top: 0.5rem;
+    }
+
+    .confidence-high {
+      background: linear-gradient(45deg, #10b981, #059669);
+      color: white;
+    }
+
+    .confidence-medium {
+      background: linear-gradient(45deg, #f59e0b, #d97706);
+      color: white;
+    }
+
+    .confidence-low {
+      background: linear-gradient(45deg, #ef4444, #dc2626);
+      color: white;
+    }
+
+    .recommendations-section { background: #fafcfb; border-radius: 12px; padding: 1rem; margin: 1rem 0; border: 1px solid var(--border); }
+
+    .recommendations-section h4 { color: var(--green); margin-bottom: 0.75rem; font-size: 1.1rem; font-weight: 700; display: flex; align-items: center; gap: 0.5rem; }
+
+    .recommendation-item { background: #fff; padding: 1rem; border-radius: 10px; margin: 0.75rem 0; border: 1px solid var(--border); }
+
+    .recommendation-item h5 {
+      color: #1e40af;
+      margin-bottom: 0.5rem;
+      font-weight: 600;
+    }
+
+    .steps-list {
+      list-style: none;
+      padding: 0;
+      margin: 1rem 0 0 0;
+    }
+
+    .steps-list li {
+      padding: 0.5rem 0;
+      padding-left: 2rem;
+      position: relative;
+      color: #555;
+    }
+
+    .steps-list li::before {
+      content: '✓';
+      position: absolute;
+      left: 0;
+      color: #10b981;
+      font-weight: bold;
+      font-size: 1.1rem;
+    }
+
+    .analysis-meta { background: #f7faf8; border-radius: 10px; padding: 1rem; margin: 1rem 0; text-align: center; border: 1px solid var(--border); }
+
+    .analysis-meta p {
+      color: #64748b;
+      font-size: 0.9rem;
+      margin: 0.25rem 0;
+    }
+
+    .reset-section {
+      text-align: center;
+      margin: 3rem 0;
+    }
+
+    .reset-btn {
+      background: linear-gradient(45deg, #6b7280, #4b5563);
+      color: white;
+      padding: 1rem 2rem;
+      border: none;
+      border-radius: 25px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-decoration: none;
+      display: inline-block;
+    }
+
+    .reset-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(107,114,128,0.3);
+    }
+
+    /* Features Section */
+    .features {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+      margin: 3rem 0;
+    }
+
+    .feature-card {
+      background: linear-gradient(135deg, #ffffff 0%, #f8fffe 100%);
+      padding: 2rem;
+      border-radius: 20px;
+      text-align: center;
+      box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+      transition: all 0.4s ease;
+      border: 1px solid rgba(74,124,89,0.1);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .feature-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: linear-gradient(90deg, var(--green-light), var(--green), var(--yellow));
+    }
+
+    .feature-card:hover {
+      transform: translateY(-10px) scale(1.02);
+      box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+    }
+
+    .feature-icon {
+      font-size: 3rem;
+      color: #4a7c59;
+      margin-bottom: 1rem;
+      animation: float 3s ease-in-out infinite;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-10px); }
+    }
+
+    .feature-card h3 {
+      color: #2c5530;
+      margin-bottom: 1rem;
+    }
+
+    /* Footer */
+    .footer { 
+      background: var(--green); 
+      color: white; 
+      padding: 3rem 0 1rem; 
+      margin-top: 4rem; 
+    }
+
+    .footer-content { 
+      display: grid; 
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); 
+      gap: 2rem; 
+      margin-bottom: 2rem; 
+    }
+
+    .footer-section h3 { 
+      margin-bottom: 1rem; 
+      color: var(--yellow); 
+    }
+
+    .footer-section p {
+      color: white;
+      margin: 0.5rem 0;
+      line-height: 1.6;
+    }
+
+    .footer-section a {
+      color: white;
+      text-decoration: none;
+      display: block;
+      margin: 0.5rem 0;
+      transition: color 0.3s ease;
+    }
+
+    .footer-section a:hover {
+      color: var(--yellow);
+    }
+
+    .footer .brand { 
+      display: flex; 
+      align-items: center; 
+      gap: 0.5rem; 
+      margin-bottom: 1rem;
+    }
+
+    .footer .brand img { 
+      height: 26px; 
+      width: 26px; 
+    }
+
+    .footer .brand span {
+      font-size: 1rem;
+      line-height: 1.6;
+    }
+
+    .footer .social { 
+      display: flex; 
+      gap: 0.75rem; 
+    }
+
+    .footer .social a { 
+      color: white; 
+      font-size: 1.1rem; 
+      transition: all 0.3s ease; 
+      text-decoration: none; 
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.1);
+    }
+
+    .footer .social a:hover { 
+      background: var(--yellow);
+      transform: translateY(-3px);
+    }
+
+    .footer-bottom { 
+      text-align: center; 
+      padding-top: 2rem; 
+      border-top: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .footer-bottom p {
+      color: rgba(255, 255, 255, 0.9);
+      font-size: 0.9rem;
+    }
+
+    .footer-links {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+      margin-top: 1rem;
+    }
+
+    .footer-links a {
+      color: rgba(255, 255, 255, 0.8);
+      text-decoration: none;
+      font-size: 0.85rem;
+      transition: color 0.3s ease;
+    }
+
+    .footer-links a:hover {
+      color: var(--yellow);
+    }
+
+    .footer-links span {
+      color: rgba(255, 255, 255, 0.4);
+    }
+
+    /* Loading Animation */
+    .loading { display: none; text-align: center; margin: 1rem 0; }
+
+    .spinner { width: 44px; height: 44px; border-radius: 50%; margin: 0.5rem auto; position: relative; border: 3px solid transparent; border-top-color: var(--green); animation: spin 900ms linear infinite; }
+    .spinner::after { content: ''; position: absolute; inset: 4px; border-radius: 50%; border: 3px solid transparent; border-right-color: var(--yellow); animation: spin 700ms linear infinite reverse; }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      .nav-menu {
+        display: none;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        width: 100%;
+        background: #2c5530;
+        flex-direction: column;
+        padding: 1rem;
+      }
+
+      .nav-menu.active {
+        display: flex;
+      }
+
+      .mobile-menu-btn {
+        display: block;
+      }
+
+      .hero-content h1 {
+        font-size: 2.5rem;
+      }
+
+      .hero-content p {
+        font-size: 1.1rem;
+      }
+
+      .section-title {
+        font-size: 2rem;
+      }
+
+      .upload-section { padding: 1.25rem; }
+
+      .upload-area { padding: 1.25rem; }
+
+      .container { padding: 0 1rem; }
+    }
+
+    @media (max-width: 480px) {
+      .hero-content h1 {
+        font-size: 2rem;
+      }
+
+      .hero { height: 46vh; }
+
+      .upload-area {
+        padding: 1.5rem 0.5rem;
+      }
+
+      .upload-icon {
+        font-size: 3rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Header -->
+  <header class="header">
+    <div class="nav-container">
+      <a href="#home" class="logo" aria-label="PalmVision Home">
+        <img src="assets/Logo.png" alt="PalmVision Logo">
+        <span>PalmVision</span>
+      </a>
+      <nav>
+        <ul class="nav-menu" id="navMenu">
+          <li><a href="#home">Beranda</a></li>
+          <li><a href="usage.html">Cara Penggunaan</a></li>
+          <li><a href="developer.html">Developer</a></li>
+        </ul>
+        <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Buka menu">
+          <i class="fas fa-bars"></i>
+        </button>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="hero" id="home">
+    <div class="hero-content">
+      <h1>PalmVision AI</h1>
+      <p>Teknologi Kecerdasan Buatan untuk Identifikasi Hama dan Gulma pada Perkebunan Kelapa Sawit</p>
+      <a href="#upload" class="cta-button">Mulai Identifikasi</a>
+    </div>
+  </section>
+
+  <!-- Main Content -->
+  <div class="container">
+    <!-- Upload Section -->
+    <section class="section" id="upload">
+      <h2 class="section-title">Identifikasi Hama & Gulma</h2>
+      <div class="upload-section">
+        <div class="upload-area" id="uploadArea">
+          <div class="upload-icon">
+            <i class="fas fa-cloud-upload-alt"></i>
+          </div>
+          <div class="upload-text">
+            <p>Drag & drop gambar di sini atau klik untuk memilih file</p>
+            <p><small>Format yang didukung: JPG, PNG, GIF (Max 10MB)</small></p>
+          </div>
+          <input type="file" id="fileInput" class="file-input" accept="image/*">
+          <button class="upload-btn" onclick="document.getElementById('fileInput').click()">
+            Pilih Gambar
+          </button>
+        </div>
+
+        <div class="preview-container" id="previewContainer" style="display: none;">
+          <img id="preview" src="" alt="Preview" />
+          <br>
+          <button class="analyze-btn" id="sendBtn">
+            <i class="fas fa-search"></i> Analisis Gambar
+          </button>
+        </div>
+
+        <div class="loading" id="loading">
+          <div class="spinner"></div>
+          <p>Sedang menganalisis gambar...</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Results Section -->
+    <div id="result"></div>
+
+    <!-- Features Section -->
+    <section class="section">
+      <h2 class="section-title">Fitur Unggulan</h2>
+      <div class="features">
+        <div class="feature-card">
+          <div class="feature-icon">
+            <i class="fas fa-robot"></i>
+          </div>
+          <h3>AI Canggih</h3>
+          <p>Menggunakan teknologi machine learning terdepan untuk identifikasi yang akurat</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">
+            <i class="fas fa-leaf"></i>
+          </div>
+          <h3>Ramah Lingkungan</h3>
+          <p>Membantu petani mengurangi penggunaan pestisida berlebihan</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">
+            <i class="fas fa-mobile-alt"></i>
+          </div>
+          <h3>Responsif</h3>
+          <p>Dapat digunakan di berbagai perangkat, dari smartphone hingga desktop</p>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-section">
+          <div class="brand" style="margin-bottom: 1rem;">
+            <img src="assets/Logo.png" alt="PalmVision Logo" style="height: 32px; width: 32px;">
+            <h3 style="margin: 0; color: var(--yellow);">PalmVision</h3>
+          </div>
+          <p style="color: rgba(255, 255, 255, 0.9); line-height: 1.6;">
+            Teknologi AI cerdas untuk identifikasi hama dan gulma pada perkebunan kelapa sawit. 
+            Mudah, cepat, dan akurat untuk petani Indonesia.
+          </p>
+        </div>
+        <div class="footer-section">
+          <h3>Quick Links</h3>
+          <a href="index.html">Beranda</a>
+          <a href="#upload">Identifikasi</a>
+          <a href="usage.html">Cara Penggunaan</a>
+          <a href="developer.html">Developer</a>
+        </div>
+        <div class="footer-section">
+          <h3>Kontak & Bantuan</h3>
+          <p><i class="fas fa-envelope"></i> info@palmvision.ai</p>
+          <p><i class="fas fa-phone"></i> +62 12</p>
+          <p><i class="fas fa-clock"></i> Support 24/7</p>
+          <div class="social" style="margin-top: 1rem;">
+            <a href="#" aria-label="Email" title="Email"><i class="fas fa-envelope"></i></a>
+            <a href="#" aria-label="Twitter" title="Twitter"><i class="fab fa-twitter"></i></a>
+            <a href="#" aria-label="GitHub" title="GitHub"><i class="fab fa-github"></i></a>
+          </div>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2025 PalmVision. Semua hak dilindungi.</p>
+        <div class="footer-links">
+          <a href="#">Kebijakan Privasi</a>
+          <span>|</span>
+          <a href="#">Syarat & Ketentuan</a>
+          <span>|</span>
+          <a href="#">Penggunaan Data AI</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Mobile menu toggle
+    const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+    const navMenu = document.getElementById('navMenu');
+
+    mobileMenuBtn.addEventListener('click', () => {
+      navMenu.classList.toggle('active');
+    });
+
+    // Smooth scrolling for anchor links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+          target.scrollIntoView({
+            behavior: 'smooth',
+            block: 'start'
+          });
+        }
+      });
+    });
+
+    // File upload functionality
+    const fileInput = document.getElementById("fileInput");
+    const preview = document.getElementById("preview");
+    const result = document.getElementById("result");
+    const sendBtn = document.getElementById("sendBtn");
+    const uploadArea = document.getElementById("uploadArea");
+    const previewContainer = document.getElementById("previewContainer");
+    const loading = document.getElementById("loading");
+
+    let base64Image = "";
+
+    // Drag and drop functionality
+    uploadArea.addEventListener('dragover', (e) => {
+      e.preventDefault();
+      uploadArea.classList.add('dragover');
+    });
+
+    uploadArea.addEventListener('dragleave', () => {
+      uploadArea.classList.remove('dragover');
+    });
+
+    uploadArea.addEventListener('drop', (e) => {
+      e.preventDefault();
+      uploadArea.classList.remove('dragover');
+      const files = e.dataTransfer.files;
+      if (files.length > 0) {
+        handleFile(files[0]);
+      }
+    });
+
+    // File input change
+    fileInput.addEventListener("change", (e) => {
+      if (e.target.files.length > 0) {
+        handleFile(e.target.files[0]);
+      }
+    });
+
+    // Handle file selection
+    function handleFile(file) {
+      if (!file.type.startsWith('image/')) {
+        alert('Silakan pilih file gambar yang valid.');
+        return;
+      }
+
+      if (file.size > 10 * 1024 * 1024) {
+        alert('Ukuran file terlalu besar. Maksimal 10MB.');
+        return;
+      }
+
+        const reader = new FileReader();
+      reader.onloadend = () => {
+        base64Image = reader.result;
+        preview.src = base64Image;
+        previewContainer.style.display = 'block';
+        uploadArea.style.display = 'none';
+      };
+        reader.readAsDataURL(file);
+    }
+
+    // Analyze button click
+    sendBtn.addEventListener("click", async () => {
+      if (!base64Image) {
+        alert("Silakan pilih gambar dulu.");
+        return;
+      }
+
+      // Show loading
+      loading.style.display = 'block';
+      sendBtn.disabled = true;
+      result.innerHTML = '';
+
+      const payload = {
+        image: base64Image,
+        analysis_type: "pest_detection",
+        user_id: "demo_user",
+        farm_id: "demo_farm",
+        webhookUrl: "http://localhost:5678/webhook-test/PalmVision-Ai"
+      };
+
+      try {
+        const response = await fetch("http://localhost:5678/webhook-test/PalmVision-Ai", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(payload)
+        });
+
+        const data = await response.json();
+        renderResult(data);
+      } catch (err) {
+        result.innerHTML = `
+          <div class="result-card">
+            <h3><i class="fas fa-exclamation-triangle"></i> Error</h3>
+            <p>Terjadi kesalahan saat menganalisis gambar: ${err.message}</p>
+            </div>
+        `;
+      } finally {
+        loading.style.display = 'none';
+        sendBtn.disabled = false;
+      }
+    });
+
+    // Render analysis results
+    function renderResult(data) {
+      if (!data || !data.data) {
+        result.innerHTML = `
+          <div class="result-card">
+            <h3><i class="fas fa-info-circle"></i> Hasil Analisis</h3>
+            <div class="result-item">
+              <strong>Status:</strong>
+              <p>Data tidak tersedia atau format tidak dikenali</p>
+            </div>
+            <div class="analysis-meta">
+              <p><strong>Debug Info:</strong></p>
+              <pre style="background: #f1f5f9; padding: 1rem; border-radius: 8px; font-size: 0.8rem; overflow-x: auto;">${JSON.stringify(data, null, 2)}</pre>
+            </div>
+          </div>
+        `;
+        return;
+      }
+
+      const d = data.data;
+      const confidence = data.confidence || 0;
+      const confidenceClass = confidence >= 70 ? 'confidence-high' : confidence >= 40 ? 'confidence-medium' : 'confidence-low';
+      
+      result.innerHTML = `
+        <div class="result-card">
+          <h3><i class="fas fa-search"></i> Hasil Identifikasi</h3>
+          
+          <div class="result-grid">
+            <div class="result-item">
+              <strong><i class="fas fa-leaf"></i> Nama Ilmiah</strong>
+              <p><i>${data.scientific_name || 'Tidak teridentifikasi'}</i></p>
+            </div>
+            
+            <div class="result-item">
+              <strong><i class="fas fa-tag"></i> Nama Umum</strong>
+              <p>${d.nama_umum || 'Tidak teridentifikasi'}</p>
+            </div>
+            
+            <div class="result-item">
+              <strong><i class="fas fa-chart-line"></i> Tingkat Kepercayaan</strong>
+              <div class="confidence-badge ${confidenceClass}">
+                <i class="fas fa-shield-alt"></i>
+                ${confidence}%
+              </div>
+            </div>
+            
+            <div class="result-item">
+              <strong><i class="fas fa-info-circle"></i> Status Identifikasi</strong>
+              <p>${data.is_new_pest ? 'Hama/Gulma Baru' : 'Hama/Gulma Dikenali'}</p>
+            </div>
+          </div>
+
+          <div class="result-item">
+            <strong><i class="fas fa-file-alt"></i> Deskripsi</strong>
+            <p>${d.deskripsi || 'Deskripsi tidak tersedia'}</p>
+          </div>
+
+          ${d.penanganan ? `
+            <div class="recommendations-section">
+              <h4><i class="fas fa-tools"></i> Rekomendasi Penanganan</h4>
+              <div class="recommendation-item">
+                <h5>Langkah-langkah Penanganan</h5>
+                <p>${d.penanganan}</p>
+              </div>
+            </div>
+          ` : ''}
+
+          ${d.pencegahan ? `
+            <div class="recommendations-section">
+              <h4><i class="fas fa-shield-alt"></i> Rekomendasi Pencegahan</h4>
+              <div class="recommendation-item">
+                <h5>Langkah-langkah Pencegahan</h5>
+                <p>${d.pencegahan}</p>
+              </div>
+            </div>
+          ` : ''}
+
+          ${data.recommendations && data.recommendations.length > 0 ? `
+            <div class="recommendations-section">
+              <h4><i class="fas fa-lightbulb"></i> Rekomendasi Tambahan</h4>
+              ${data.recommendations.map(rec => `
+                <div class="recommendation-item">
+                  <h5>${rec.title || 'Rekomendasi'}</h5>
+                  <p>${rec.description || ''}</p>
+                  ${rec.steps && rec.steps.length > 0 ? `
+                    <ul class="steps-list">
+                      ${rec.steps.map(step => `<li>${step}</li>`).join('')}
+                    </ul>
+                  ` : ''}
+                </div>
+              `).join('')}
+            </div>
+          ` : ''}
+
+          <div class="analysis-meta">
+            <p><strong>ID Analisis:</strong> ${data.analysis_id || 'N/A'}</p>
+            <p><strong>Waktu Analisis:</strong> ${data.timestamp ? new Date(data.timestamp).toLocaleString('id-ID') : 'N/A'}</p>
+            <p><strong>Status:</strong> ${data.is_new_pest ? 'Hama/Gulma Baru' : 'Hama/Gulma Dikenali'}</p>
+          </div>
+
+          <div class="reset-section">
+            <button class="reset-btn" onclick="resetUpload()">
+              <i class="fas fa-plus"></i> Analisis Gambar Lain
+            </button>
+          </div>
+        </div>
+      `;
+    }
+
+    // Reset upload area
+    function resetUpload() {
+      uploadArea.style.display = 'block';
+      previewContainer.style.display = 'none';
+      base64Image = '';
+      fileInput.value = '';
+      result.innerHTML = '';
+    }
+
+    // Add reset button functionality
+    document.addEventListener('DOMContentLoaded', () => {
+      const resetBtn = document.createElement('button');
+      resetBtn.textContent = 'Unggah Gambar Baru';
+      resetBtn.className = 'upload-btn';
+      resetBtn.style.marginTop = '1rem';
+      resetBtn.onclick = resetUpload;
+      previewContainer.appendChild(resetBtn);
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,153 @@
+{
+  "name": "PalmVision-Ai",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "PalmVision-Ai",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        -960,
+        32
+      ],
+      "id": "a10c7fff-2b06-4b13-b6be-feab66597e80",
+      "name": "PalmVision1",
+      "webhookId": "webhook-1234"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpQueryAuth",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"contents\": [\n    {\n      \"parts\": [\n        {\n          \"text\": \"Identifikasi gambar ini, dan berikan hanya Nama Ilmiah dari hama atau gulma yang terlihat pada gambar. Jawaban harus persis salah satu dari daftar berikut tanpa tambahan teks, tanda baca, atau kata lain. Jika gambar tidak cocok, balas dengan teks 'Tidak Dikenali'. Daftar yang diizinkan: Imperata cylindrica, Sphenoclea palustris, Cyclosorus aridus, Pennisetum purpureum, Pennisetum setosum, Elettariopsis curtisii, Dianella sp, Chromolaena odorata, Mimosa pigra, Asystasia intrusa, Ottochloa nodosa, Scleria sumatrensis, Nephrolepis biserrata, Bambusa spp, Euphorbia heterophylla, Clidemia hirta, Eleusine indica, Cyperus rotundus, Ageratum conyzoides, Melastoma malabathricum, Cassia alata, Asplenium aridus, Borreria alata, Paspalum conjugatum, Musa spp, Colocasia spp, Amaranthus spinosus, Cleome sp, Urena lobata, Mimosa pudica, Lantana camara, Mahasena corbetti, Valanga nigricornis, Schedorhinotermes spp, Spodoptera litura, Adoretus compressus, Oryctes rhinoceros, Tetranychus spp, Radopholus similis, Setora nitens, Rattus tiomanicus, Sus scrofa, Tirathaba mundella.\"\n        },\n        {\n          \"inline_data\": {\n            \"mime_type\": \"image/jpeg\",\n            \"data\": \"{{ $json.body.image.split(',')[1] }}\"\n          }\n        }\n      ]\n    }\n  ]\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4,
+      "position": [
+        -704,
+        32
+      ],
+      "id": "566b389c-281c-44cf-b2ab-844c527fbd1b",
+      "name": "HTTP Request1",
+      "credentials": {
+        "httpQueryAuth": {
+          "id": "iA5CLi35S47UQs5S",
+          "name": "Query Auth account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "1a6W15idDfwapRB2P9o9KxO1NTAamFHAtxl8SSFDCFOw",
+          "mode": "list",
+          "cachedResultName": "PalmVision",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1a6W15idDfwapRB2P9o9KxO1NTAamFHAtxl8SSFDCFOw/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 2053202846,
+          "mode": "list",
+          "cachedResultName": "DatasSet",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1a6W15idDfwapRB2P9o9KxO1NTAamFHAtxl8SSFDCFOw/edit#gid=2053202846"
+        },
+        "filtersUI": {
+          "values": [
+            {
+              "lookupColumn": "nama_ilmiah",
+              "lookupValue": "={{ $json.candidates[0].content.parts[0].text }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4,
+      "position": [
+        -208,
+        32
+      ],
+      "id": "a0d46212-bd07-4cad-ac14-6596957d285d",
+      "name": "Filter Data1",
+      "alwaysOutputData": true,
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "13VO3KXUMMzb1n9d",
+          "name": "Google Sheets account 3"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={\n  \"success\": true,\n  \"scientific_name\": \"{{ $json.nama_ilmiah }}\",\n  \"found\": {{ $json.row_count > 0 }},\n  \"data\": {\n    \"nama_ilmiah\": \"{{ $json.nama_ilmiah }}\",\n    \"nama_umum\": \"{{ $json.nama_umum || 'Belum diketahui' }}\",\n    \"deskripsi\": \"{{ $json.deskripsi || 'Belum ada deskripsi.' }}\",\n    \"pencegahan\": \"{{ $json.pencegahan || 'Belum ada data pencegahan.' }}\",\n    \"penanganan\": \"{{ $json.penanganan || 'Belum ada data penanganan.' }}\"\n  }\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1,
+      "position": [
+        192,
+        32
+      ],
+      "id": "8a2717b6-00d6-4fcb-9a69-6eccdb4a5db1",
+      "name": "Return To PalmVision1"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "PalmVision1": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request1": {
+      "main": [
+        [
+          {
+            "node": "Filter Data1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Filter Data1": {
+      "main": [
+        [
+          {
+            "node": "Return To PalmVision1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1",
+    "callerPolicy": "workflowsFromSameOwner"
+  },
+  "versionId": "1de819f9-40c6-4986-9ec1-e6aef1a2a58c",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "47512dea246788a80a4c756dff261de566a924a2b40848d8baee0fea8660d22a"
+  },
+  "id": "cXX2gzeUX6YqkesT",
+  "tags": []
+}
