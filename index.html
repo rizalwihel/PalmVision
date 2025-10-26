@@ -915,11 +915,11 @@
         analysis_type: "pest_detection",
         user_id: "demo_user",
         farm_id: "demo_farm",
-        webhookUrl: "https://d027b0a0fe04.ngrok-free.app/webhook-test/PalmVision-Ai"
+        webhookUrl: "https://d027b0a0fe04.ngrok-free.app/webhook/PalmVision-Ai"
       };
 
       try {
-        const response = await fetch("https://d027b0a0fe04.ngrok-free.app/webhook-test/PalmVision-Ai", {
+        const response = await fetch("https://d027b0a0fe04.ngrok-free.app/webhook/PalmVision-Ai", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(payload)
