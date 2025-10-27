@@ -1,0 +1,1280 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tentang Kami - PalmVision AI</title>
+  <link rel="icon" href="assets/Logo.png">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+  <style>
+    :root { --brand-green:#2c5530; --brand-green-light:#4a7c59; --brand-yellow:#ffd700; }
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      line-height: 1.6;
+      color: #333;
+      background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+      min-height: 100vh;
+      -webkit-tap-highlight-color: transparent;
+      touch-action: manipulation;
+    }
+
+    /* Better touch targets for mobile */
+    button, a, input {
+      touch-action: manipulation;
+    }
+
+    /* Header & Navigation */
+    .header {
+      background: linear-gradient(135deg, var(--brand-green) 0%, var(--brand-green-light) 100%);
+      color: white;
+      padding: 1rem 0;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+
+    .nav-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo { display:flex; align-items:center; gap:0.6rem; font-weight:800; color:#fff; text-decoration:none; }
+    .logo img{height:34px;width:34px;object-fit:contain;display:block;}
+
+    .nav-menu {
+      display: flex;
+      list-style: none;
+      gap: 2rem;
+    }
+
+    .nav-menu a {
+      color: white;
+      text-decoration: none;
+      padding: 0.5rem 1rem;
+      border-radius: 25px;
+      transition: all 0.3s ease;
+    }
+
+    .nav-menu a:hover {
+      background: rgba(255,255,255,0.2);
+      transform: translateY(-2px);
+    }
+
+    .mobile-menu-btn {
+      display: none;
+      background: none;
+      border: none;
+      color: white;
+      font-size: 1.5rem;
+      cursor: pointer;
+      padding: 0.5rem;
+      transition: transform 0.3s ease;
+    }
+
+    .mobile-menu-btn:hover {
+      transform: rotate(90deg);
+    }
+
+    /* Main Content */
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 2rem;
+    }
+
+    .section {
+      padding: 4rem 0;
+    }
+
+    .page-header {
+      background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('assets/Banner.png');
+      background-size: cover;
+      background-position: center;
+      height: 50vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      color: white;
+      margin-bottom: 3rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Shimmer Effect */
+    .page-header::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(255, 204, 0, 0.5),
+        transparent
+      );
+      animation: shimmer 4s ease-in-out infinite;
+      z-index: 1;
+    }
+
+    @keyframes shimmer {
+      0% {
+        left: -100%;
+      }
+      100% {
+        left: 100%;
+      }
+    }
+
+    .page-header h1 {
+      font-size: 3rem;
+      margin-bottom: 1rem;
+      text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+    }
+
+    .page-header p {
+      font-size: 1.2rem;
+      max-width: 600px;
+    }
+
+    .section-title {
+      text-align: center;
+      font-size: 2.5rem;
+      color: #2c5530;
+      margin-bottom: 3rem;
+      position: relative;
+    }
+
+    .section-title::after {
+      content: '';
+      position: absolute;
+      bottom: -10px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 80px;
+      height: 4px;
+      background: linear-gradient(45deg, #ffd700, #ffed4e);
+      border-radius: 2px;
+    }
+
+    /* Developer Cards */
+    .developers-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
+      gap: 4rem;
+      margin: 4rem 0;
+    }
+
+    .developer-card {
+      background: linear-gradient(135deg, #ffffff 0%, #f8fffe 100%);
+      border-radius: 25px;
+      padding: 4rem 3rem;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+      text-align: center;
+      transition: all 0.4s ease;
+      position: relative;
+      overflow: hidden;
+      border: 1px solid rgba(74,124,89,0.1);
+    }
+
+    .developer-card:hover {
+      transform: translateY(-15px) scale(1.02);
+      box-shadow: 0 30px 60px rgba(0,0,0,0.15);
+    }
+
+    .developer-card:hover::before {
+      background: linear-gradient(90deg, #ffd700, #4a7c59, #2c5530);
+    }
+
+    .step-icon {
+      font-size: 5rem;
+      color: #4a7c59;
+      margin: 0 0 1.5rem 0;
+      animation: pulse 2s ease-in-out infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.1); }
+    }
+
+    .developer-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 6px;
+      background: linear-gradient(90deg, #4a7c59, #2c5530, #ffd700);
+    }
+
+    .developer-photo {
+      width: 180px;
+      height: 180px;
+      border-radius: 50%;
+      margin: 0 auto 2.5rem;
+      border: 6px solid #4a7c59;
+      object-fit: cover;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+      transition: all 0.3s ease;
+    }
+
+    .developer-card:hover .developer-photo {
+      transform: scale(1.05);
+      box-shadow: 0 15px 35px rgba(0,0,0,0.3);
+    }
+
+    .developer-name {
+      font-size: 2.2rem;
+      color: #2c5530;
+      margin-bottom: 0.8rem;
+      font-weight: 800;
+      background: linear-gradient(45deg, #2c5530, #4a7c59);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .developer-role {
+      font-size: 1.4rem;
+      color: #4a7c59;
+      margin-bottom: 1.5rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .developer-bio {
+      color: #555;
+      line-height: 1.7;
+      margin-bottom: 2.5rem;
+      font-size: 1.1rem;
+    }
+
+    .skills-container {
+      margin: 2.5rem 0;
+    }
+
+    .skills-title {
+      font-size: 1.3rem;
+      color: #2c5530;
+      margin-bottom: 1.5rem;
+      font-weight: 700;
+      text-align: center;
+      position: relative;
+    }
+
+    .skills-title::after {
+      content: '';
+      position: absolute;
+      bottom: -8px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 50px;
+      height: 3px;
+      background: linear-gradient(45deg, #ffd700, #ffed4e);
+      border-radius: 2px;
+    }
+
+    .skills-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.8rem;
+      justify-content: center;
+    }
+
+    .skill-tag {
+      background: linear-gradient(45deg, #4a7c59, #2c5530);
+      color: white;
+      padding: 0.7rem 1.2rem;
+      border-radius: 25px;
+      font-size: 0.95rem;
+      font-weight: 600;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 15px rgba(74,124,89,0.3);
+    }
+
+    .skill-tag:hover {
+      transform: translateY(-2px) scale(1.05);
+      box-shadow: 0 6px 20px rgba(74,124,89,0.4);
+    }
+
+    .social-links {
+      display: flex;
+      justify-content: center;
+      gap: 1.5rem;
+      margin-top: 3rem;
+    }
+
+    .social-link {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 50px;
+      height: 50px;
+      background: linear-gradient(45deg, #4a7c59, #2c5530);
+      color: white;
+      border-radius: 50%;
+      text-decoration: none;
+      transition: all 0.4s ease;
+      box-shadow: 0 8px 20px rgba(74,124,89,0.3);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .social-link::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+      transition: left 0.6s;
+    }
+
+    .social-link:hover::before {
+      left: 100%;
+    }
+
+    .social-link:hover {
+      transform: translateY(-5px) scale(1.1);
+      box-shadow: 0 12px 25px rgba(74,124,89,0.4);
+    }
+
+    /* Team Section */
+    .team-section {
+      background: linear-gradient(135deg, #ffffff 0%, #f8fffe 100%);
+      border-radius: 25px;
+      padding: 4rem;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+      margin: 4rem 0;
+      border: 1px solid rgba(74,124,89,0.1);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .team-section::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 6px;
+      background: linear-gradient(90deg, #4a7c59, #2c5530, #ffd700);
+    }
+
+    .team-info {
+      text-align: center;
+      margin-bottom: 4rem;
+    }
+
+    .team-info h3 {
+      font-size: 2.5rem;
+      color: #2c5530;
+      margin-bottom: 1.5rem;
+      font-weight: 800;
+      background: linear-gradient(45deg, #2c5530, #4a7c59);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .team-info p {
+      font-size: 1.2rem;
+      color: #555;
+      max-width: 900px;
+      margin: 0 auto;
+      line-height: 1.7;
+    }
+
+    .team-stats {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 2.5rem;
+      margin-top: 4rem;
+    }
+
+    .stat-item {
+      text-align: center;
+      padding: 3rem 2rem;
+      background: linear-gradient(135deg, #f8fffe 0%, #f0f8f0 100%);
+      border-radius: 20px;
+      border-left: 5px solid #ffd700;
+      transition: all 0.3s ease;
+      box-shadow: 0 8px 25px rgba(0,0,0,0.08);
+    }
+
+    .stat-item:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 15px 35px rgba(0,0,0,0.12);
+    }
+
+    .stat-number {
+      font-size: 3rem;
+      font-weight: 800;
+      color: #4a7c59;
+      margin-bottom: 0.8rem;
+      background: linear-gradient(45deg, #4a7c59, #2c5530);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .stat-label {
+      color: #555;
+      font-weight: 600;
+      font-size: 1.1rem;
+    }
+
+    /* Technology Stack */
+    .tech-stack {
+      background: linear-gradient(135deg, #ffffff 0%, #f8fffe 100%);
+      border-radius: 25px;
+      padding: 4rem;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+      margin: 4rem 0;
+      border: 1px solid rgba(74,124,89,0.1);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .tech-stack::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 6px;
+      background: linear-gradient(90deg, #4a7c59, #2c5530, #ffd700);
+    }
+
+    .tech-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 2.5rem;
+      margin-top: 3rem;
+    }
+
+    .tech-item {
+      text-align: center;
+      padding: 2.5rem 2rem;
+      background: linear-gradient(135deg, #f8fffe 0%, #f0f8f0 100%);
+      border-radius: 20px;
+      transition: all 0.4s ease;
+      box-shadow: 0 8px 25px rgba(0,0,0,0.08);
+      border: 1px solid rgba(74,124,89,0.1);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .tech-item::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: linear-gradient(90deg, #4a7c59, #2c5530);
+    }
+
+    .tech-item:hover {
+      transform: translateY(-8px) scale(1.02);
+      box-shadow: 0 15px 35px rgba(0,0,0,0.12);
+    }
+
+    .tech-icon {
+      font-size: 4rem;
+      color: #4a7c59;
+      margin-bottom: 1.5rem;
+      animation: techPulse 3s ease-in-out infinite;
+    }
+
+    @keyframes techPulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.1); }
+    }
+
+    .tech-name {
+      font-weight: 700;
+      color: #2c5530;
+      margin-bottom: 0.8rem;
+      font-size: 1.2rem;
+    }
+
+    .tech-description {
+      font-size: 1rem;
+      color: #555;
+      line-height: 1.5;
+    }
+
+    /* Footer */
+    .footer {
+      background: #2c5530;
+      color: white;
+      padding: 3rem 0 1rem;
+      margin-top: 4rem;
+    }
+
+    .footer-content {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 2rem;
+      margin-bottom: 2rem;
+    }
+
+    .footer-section h3 {
+      margin-bottom: 1rem;
+      color: #ffd700;
+      font-size: 1.2rem;
+    }
+
+    .footer-section p {
+      color: white;
+      margin: 0.5rem 0;
+      line-height: 1.6;
+    }
+
+    .footer-section a {
+      color: white;
+      text-decoration: none;
+      display: block;
+      margin: 0.5rem 0;
+      transition: color 0.3s ease;
+    }
+
+    .footer-section a:hover {
+      color: #ffd700;
+    }
+
+    .footer-section .social {
+      display: flex;
+      gap: 0.75rem;
+      margin-top: 1rem;
+    }
+
+    .footer-section .social a {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.1);
+      color: white;
+      font-size: 1.1rem;
+      transition: all 0.3s ease;
+    }
+
+    .footer-section .social a:hover {
+      background: #ffd700;
+      color: #2c5530;
+      transform: translateY(-3px);
+    }
+
+    .footer-bottom {
+      text-align: center;
+      padding-top: 2rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .footer-bottom p {
+      color: rgba(255, 255, 255, 0.9);
+      font-size: 0.9rem;
+    }
+
+    .footer-links {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+      margin-top: 1rem;
+    }
+
+    .footer-links a {
+      color: rgba(255, 255, 255, 0.8);
+      text-decoration: none;
+      font-size: 0.85rem;
+      transition: color 0.3s ease;
+    }
+
+    .footer-links a:hover {
+      color: #ffd700;
+    }
+
+    .footer-links span {
+      color: rgba(255, 255, 255, 0.4);
+    }
+
+    /* Responsive Design */
+    @media (max-width: 1024px) {
+      .developers-grid {
+        grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+        gap: 3rem;
+      }
+      .nav-menu {
+        gap: 1rem;
+      }
+      .tech-grid {
+        grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+        gap: 2rem;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .nav-container {
+        padding: 0 1rem;
+      }
+
+      .nav-menu {
+        display: none;
+        position: fixed;
+        top: 60px;
+        left: 0;
+        width: 100%;
+        background: #2c5530;
+        flex-direction: column;
+        padding: 1rem;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        z-index: 999;
+        opacity: 0;
+        transform: translateY(-20px);
+        transition: opacity 0.3s ease, transform 0.3s ease;
+      }
+
+      .nav-menu.active {
+        display: flex;
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      .mobile-menu-btn {
+        display: block;
+      }
+
+      .nav-menu li {
+        width: 100%;
+      }
+
+      .nav-menu a {
+        display: block;
+        padding: 1rem;
+        border-radius: 10px;
+        margin-bottom: 0.5rem;
+      }
+
+      .page-header h1 {
+        font-size: 2.5rem;
+        padding: 0 1rem;
+      }
+
+      .page-header p {
+        font-size: 1rem;
+        padding: 0 1rem;
+      }
+
+      .section-title {
+        font-size: 2rem;
+      }
+
+      .developers-grid {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+      }
+
+      .developer-card {
+        padding: 2.5rem 1.5rem;
+      }
+
+      .container {
+        padding: 0 1rem;
+      }
+
+      .team-section,
+      .tech-stack {
+        padding: 2.5rem 1.5rem;
+      }
+
+      .section {
+        padding: 3rem 0;
+      }
+
+      .developer-bio {
+        font-size: 1rem;
+      }
+
+      .skills-list {
+        gap: 0.6rem;
+      }
+
+      .skill-tag {
+        padding: 0.6rem 1rem;
+        font-size: 0.9rem;
+      }
+
+      .social-links {
+        gap: 1rem;
+      }
+
+      .social-link {
+        width: 45px;
+        height: 45px;
+        font-size: 1rem;
+      }
+
+      .footer-content {
+        grid-template-columns: 1fr;
+        text-align: center;
+      }
+
+      .page-header {
+        height: 45vh;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .page-header h1 {
+        font-size: 2rem;
+      }
+
+      .page-header p {
+        font-size: 0.9rem;
+      }
+
+      .page-header {
+        height: 40vh;
+      }
+
+      .developer-card {
+        padding: 2rem 1rem;
+      }
+
+      .developer-photo {
+        width: 140px;
+        height: 140px;
+      }
+
+      .developer-name {
+        font-size: 1.75rem;
+      }
+
+      .developer-role {
+        font-size: 1.1rem;
+      }
+
+      .developer-bio {
+        font-size: 0.95rem;
+      }
+
+      .section-title {
+        font-size: 1.75rem;
+      }
+
+      .tech-grid {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+      }
+
+      .team-stats {
+        grid-template-columns: 1fr 1fr;
+        gap: 1.5rem;
+      }
+
+      .stat-item {
+        padding: 2rem 1.5rem;
+      }
+
+      .stat-number {
+        font-size: 2.5rem;
+      }
+
+      .section {
+        padding: 2rem 0;
+      }
+
+      .nav-container {
+        padding: 0 0.75rem;
+      }
+
+      .logo span {
+        font-size: 1.1rem;
+      }
+    }
+
+    @media (max-width: 360px) {
+      .page-header h1 {
+        font-size: 1.75rem;
+      }
+
+      .developer-photo {
+        width: 120px;
+        height: 120px;
+      }
+
+      .developer-name {
+        font-size: 1.5rem;
+      }
+
+      .section-title {
+        font-size: 1.5rem;
+      }
+
+      .tech-icon {
+        font-size: 3rem;
+      }
+
+      .team-stats {
+        grid-template-columns: 1fr;
+      }
+
+      .skills-list {
+        justify-content: flex-start;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Header -->
+  <header class="header">
+    <div class="nav-container">
+      <a href="index.html" class="logo" aria-label="PalmVision Home">
+        <img src="assets/Logo.png" alt="PalmVision Logo"><span>PalmVision</span>
+      </a>
+      <nav>
+        <ul class="nav-menu" id="navMenu">
+          <li><a href="index.html">Beranda</a></li>
+          <li><a href="usage.html">Cara Penggunaan</a></li>
+          <li><a href="developer.html" class="active">Tentang</a></li>
+        </ul>
+        <button class="mobile-menu-btn" id="mobileMenuBtn">
+          <i class="fas fa-bars"></i>
+        </button>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Page Header -->
+  <section class="page-header">
+    <div>
+      <h1>Tentang PalmVision</h1>
+      <p>Platform AI cerdas yang membantu petani kelapa sawit Indonesia dalam identifikasi hama dan gulma secara akurat dan cepat</p>
+    </div>
+  </section>
+
+  <!-- Main Content -->
+  <div class="container">
+    <!-- About PalmVision Section -->
+    <section class="section">
+      <h2 class="section-title">Tentang PalmVision</h2>
+      <div class="team-section">
+        <div class="team-info">
+          <h3>Solusi AI untuk Perkebunan Kelapa Sawit</h3>
+          <p>
+            PalmVision adalah platform teknologi kecerdasan buatan (AI) yang dikembangkan khusus untuk membantu petani dan pengelola perkebunan kelapa sawit di Indonesia dalam mengidentifikasi hama dan gulma secara cepat dan akurat. Dengan memanfaatkan teknologi machine learning terdepan, PalmVision memberikan solusi praktis dan efisien untuk pengelolaan kesehatan tanaman kelapa sawit.
+          </p>
+          <p>
+            Platform ini dirancang dengan antarmuka yang user-friendly, dapat diakses melalui berbagai perangkat, dan memberikan hasil identifikasi yang dapat diandalkan dalam hitungan detik. PalmVision tidak hanya mengidentifikasi jenis hama dan gulma, tetapi juga menyediakan informasi lengkap tentang penanganan dan pencegahan yang tepat.
+          </p>
+        </div>
+
+        <div class="team-stats">
+          <div class="stat-item">
+            <div class="stat-number">90%+</div>
+            <div class="stat-label">Akurasi Identifikasi</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-number"><i class="fas fa-bolt"></i> Real-time</div>
+            <div class="stat-label">Analisis Cepat</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-number">100%</div>
+            <div class="stat-label">Gratis Digunakan</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-number">24/7</div>
+            <div class="stat-label">Ketersediaan</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Vision & Mission Section -->
+    <section class="section">
+      <h2 class="section-title">Visi & Misi</h2>
+      <div class="developers-grid">
+        <div class="developer-card">
+          <div class="step-icon">
+            <i class="fas fa-eye"></i>
+          </div>
+          <h3 class="developer-name">Visi</h3>
+          <p class="developer-bio">
+            Menjadi platform teknologi AI terdepan di Indonesia yang membantu meningkatkan produktivitas dan keberlanjutan perkebunan kelapa sawit melalui identifikasi hama dan gulma yang akurat, cepat, dan mudah diakses oleh seluruh petani Indonesia.
+          </p>
+        </div>
+
+        <div class="developer-card">
+          <div class="step-icon">
+            <i class="fas fa-bullseye"></i>
+          </div>
+          <h3 class="developer-name">Misi</h3>
+          <p class="developer-bio">
+            Menyediakan teknologi AI yang mudah digunakan untuk membantu petani kelapa sawit mengidentifikasi masalah kesehatan tanaman secara akurat, mengurangi penggunaan pestisida berlebihan, meningkatkan hasil panen, dan mendukung praktik pertanian yang lebih berkelanjutan di Indonesia.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Key Features Section -->
+    <section class="section">
+      <h2 class="section-title">Fitur Utama PalmVision</h2>
+      <div class="tech-stack">
+        <div class="tech-grid">
+          <div class="tech-item">
+            <div class="tech-icon">
+              <i class="fas fa-brain"></i>
+            </div>
+            <div class="tech-name">AI Cerdas</div>
+            <div class="tech-description">Teknologi machine learning untuk identifikasi yang akurat hingga 90%</div>
+          </div>
+
+          <div class="tech-item">
+            <div class="tech-icon">
+              <i class="fas fa-mobile-alt"></i>
+            </div>
+            <div class="tech-name">Responsif</div>
+            <div class="tech-description">Dapat diakses dari smartphone, tablet, atau desktop</div>
+          </div>
+
+          <div class="tech-item">
+            <div class="tech-icon">
+              <i class="fas fa-clock"></i>
+            </div>
+            <div class="tech-name">Real-time</div>
+            <div class="tech-description">Hasil identifikasi dalam hitungan detik</div>
+          </div>
+
+          <div class="tech-item">
+            <div class="tech-icon">
+              <i class="fas fa-leaf"></i>
+            </div>
+            <div class="tech-name">Ramah Lingkungan</div>
+            <div class="tech-description">Membantu mengurangi penggunaan pestisida berlebihan</div>
+          </div>
+
+          <div class="tech-item">
+            <div class="tech-icon">
+              <i class="fas fa-book"></i>
+            </div>
+            <div class="tech-name">Panduan Lengkap</div>
+            <div class="tech-description">Rekomendasi penanganan dan pencegahan yang terperinci</div>
+          </div>
+
+          <div class="tech-item">
+            <div class="tech-icon">
+              <i class="fas fa-shield-alt"></i>
+            </div>
+            <div class="tech-name">Aman & Privat</div>
+            <div class="tech-description">Data gambar Anda tidak disimpan permanen</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Developers Section -->
+    <section class="section">
+      <h2 class="section-title">Tim Pengembang</h2>
+      <div class="developers-grid">
+                <!-- Rizal - Backend Developer -->
+                <div class="developer-card">
+                  <img src="assets/Rizal.jpeg" alt="Rizal" class="developer-photo">
+                  <h3 class="developer-name">Muhamad Rizal Wihel</h3>
+                  <p class="developer-role">Backend Developer</p>
+                  <p class="developer-bio">
+                    Mahasiswa Muda yang selalu ingin belajar dan berkembang dalam bidang teknologi dan bisnis. Saya ahli dalam membangun sistem sistem yang mempermudah. 
+                    Rizal mengembangkan API dan infrastruktur backend yang mendukung fungsionalitas AI PalmVision, 
+                    memastikan performa optimal dan keamanan data.
+                  </p>
+                  <div class="skills-container">
+                    <h4 class="skills-title">Keahlian:</h4>
+                    <div class="skills-list">
+                      <span class="skill-tag">Python</span>
+                      <span class="skill-tag">Java</span>
+                      <span class="skill-tag">API Development</span>
+                      <span class="skill-tag">Cloud Computing</span>
+                      <span class="skill-tag">AI Integration</span>
+                    </div>
+                  </div>
+                  <div class="social-links">
+                    <a href="#" class="social-link" title="LinkedIn">
+                      <i class="fab fa-linkedin-in"></i>
+                    </a>
+                    <a href="#" class="social-link" title="GitHub">
+                      <i class="fab fa-github"></i>
+                    </a>
+                    <a href="#" class="social-link" title="Email">
+                      <i class="fas fa-envelope"></i>
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </section>
+        <!-- Adan - Frontend Developer -->
+        <div class="developer-card">
+          <img src="assets/Adan.jpeg" alt="Adan" class="developer-photo">
+          <h3 class="developer-name">Adan Sobirin</h3>
+          <p class="developer-role">Frontend Developer</p>
+          <p class="developer-bio">
+            Seorang frontend developer yang berpengalaman dengan keahlian dalam mengembangkan antarmuka pengguna yang responsif dan modern. 
+            Adan bertanggung jawab untuk menciptakan pengalaman pengguna yang intuitif dan menarik dalam aplikasi PalmVision AI.
+          </p>
+          <div class="skills-container">
+            <h4 class="skills-title">Keahlian:</h4>
+            <div class="skills-list">
+              <span class="skill-tag">HTML5</span>
+              <span class="skill-tag">CSS3</span>
+              <span class="skill-tag">JavaScript</span>
+              <span class="skill-tag">React</span>
+              <span class="skill-tag">Vue.js</span>
+              <span class="skill-tag">Responsive Design</span>
+            </div>
+          </div>
+          <div class="social-links">
+            <a href="#" class="social-link" title="LinkedIn">
+              <i class="fab fa-linkedin-in"></i>
+            </a>
+            <a href="#" class="social-link" title="GitHub">
+              <i class="fab fa-github"></i>
+            </a>
+            <a href="#" class="social-link" title="Email">
+              <i class="fas fa-envelope"></i>
+            </a>
+          </div>
+        </div>
+
+
+
+    <!-- Team Info Section -->
+    <section class="section">
+      <div class="team-section">
+        <div class="team-info">
+          <h3>Tentang Tim Kami</h3>
+          <p>
+            Tim PalmVision AI terdiri dari Mahasiswa yang berkomitmen untuk mengembangkan 
+            solusi teknologi terdepan dalam bidang perkebunan kelapa sawit. Dengan kombinasi keahlian frontend dan backend, 
+            kami menciptakan aplikasi yang tidak hanya fungsional tetapi juga mudah digunakan oleh petani 
+            kelapa sawit di seluruh Indonesia.
+          </p>
+        </div>
+
+        <div class="team-stats">
+          <div class="stat-item">
+            <div class="stat-number">2+</div>
+            <div class="stat-label">Tahun Pengalaman</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-number">3+</div>
+            <div class="stat-label">Proyek Selesai</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-number">50+</div>
+            <div class="stat-label">Teknologi Dikuasai</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-number">24/7</div>
+            <div class="stat-label">Dukungan Tim</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Technology Stack Section -->
+    <section class="section">
+      <h2 class="section-title">Teknologi yang Digunakan</h2>
+      <div class="tech-stack">
+        <div class="tech-grid">
+          <div class="tech-item">
+            <div class="tech-icon">
+              <i class="fab fa-html5"></i>
+            </div>
+            <div class="tech-name">HTML5</div>
+            <div class="tech-description">Struktur dasar website</div>
+          </div>
+
+          <div class="tech-item">
+            <div class="tech-icon">
+              <i class="fab fa-css3-alt"></i>
+            </div>
+            <div class="tech-name">CSS3</div>
+            <div class="tech-description">Styling dan layout</div>
+          </div>
+
+          <div class="tech-item">
+            <div class="tech-icon">
+              <i class="fab fa-js-square"></i>
+            </div>
+            <div class="tech-name">JavaScript</div>
+            <div class="tech-description">Interaktivitas website</div>
+          </div>
+
+          <div class="tech-item">
+            <div class="tech-icon">
+              <i class="fas fa-brain"></i>
+            </div>
+            <div class="tech-name">AI/ML</div>
+            <div class="tech-description">Machine learning</div>
+          </div>
+
+          <div class="tech-item">
+            <div class="tech-icon">
+              <i class="fas fa-cloud"></i>
+            </div>
+            <div class="tech-name">Cloud</div>
+            <div class="tech-description">Cloud computing</div>
+          </div>
+
+          <div class="tech-item">
+            <div class="tech-icon">
+              <i class="fas fa-database"></i>
+            </div>
+            <div class="tech-name">Database</div>
+            <div class="tech-description">Data management</div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-section">
+          <div class="brand" style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1rem;">
+            <img src="assets/Logo.png" alt="PalmVision Logo" style="height: 32px; width: 32px;">
+            <h3 style="margin: 0; color: #ffd700;">PalmVision</h3>
+          </div>
+          <p style="color: rgba(255, 255, 255, 0.9); line-height: 1.6;">
+            Teknologi AI cerdas untuk identifikasi hama dan gulma pada perkebunan kelapa sawit. 
+            Mudah, cepat, dan akurat untuk petani Indonesia.
+          </p>
+        </div>
+        <div class="footer-section">
+          <h3>Quick Links</h3>
+          <a href="index.html">Beranda</a>
+          <a href="index.html#upload">Identifikasi</a>
+          <a href="usage.html">Cara Penggunaan</a>
+          <a href="developer.html">Tentang</a>
+        </div>
+        <div class="footer-section">
+          <h3>Kontak & Bantuan</h3>
+          <p><i class="fas fa-envelope"></i> info@palmvision.ai</p>
+          <p><i class="fas fa-phone"></i> +62 81343145435</p>
+          <p><i class="fas fa-clock"></i> Support 24/7</p>
+          <div class="social">
+            <a href="#" aria-label="Email" title="Email"><i class="fas fa-envelope"></i></a>
+            <a href="#" aria-label="Twitter" title="Twitter"><i class="fab fa-twitter"></i></a>
+            <a href="#" aria-label="GitHub" title="GitHub"><i class="fab fa-github"></i></a>
+          </div>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2025 PalmVision. Semua hak dilindungi.</p>
+        <div class="footer-links">
+          <a href="#">Kebijakan Privasi</a>
+          <span>|</span>
+          <a href="#">Syarat & Ketentuan</a>
+          <span>|</span>
+          <a href="#">Penggunaan Data AI</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Mobile menu toggle
+    const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+    const navMenu = document.getElementById('navMenu');
+
+    mobileMenuBtn.addEventListener('click', () => {
+      navMenu.classList.toggle('active');
+    });
+
+    // Close mobile menu when clicking on a link
+    document.querySelectorAll('.nav-menu a').forEach(link => {
+      link.addEventListener('click', () => {
+        navMenu.classList.remove('active');
+      });
+    });
+
+    // Close mobile menu when clicking outside
+    document.addEventListener('click', (e) => {
+      if (navMenu.classList.contains('active') && 
+          !navMenu.contains(e.target) && 
+          !mobileMenuBtn.contains(e.target)) {
+        navMenu.classList.remove('active');
+      }
+    });
+
+    // Smooth scrolling for anchor links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+          target.scrollIntoView({
+            behavior: 'smooth',
+            block: 'start'
+          });
+        }
+      });
+    });
+
+    // Add animation to developer cards on scroll
+    const observerOptions = {
+      threshold: 0.1,
+      rootMargin: '0px 0px -50px 0px'
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.style.opacity = '1';
+          entry.target.style.transform = 'translateY(0)';
+        }
+      });
+    }, observerOptions);
+
+    // Apply animation to developer cards
+    document.querySelectorAll('.developer-card').forEach(card => {
+      card.style.opacity = '0';
+      card.style.transform = 'translateY(30px)';
+      card.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+      observer.observe(card);
+    });
+
+    // Apply animation to tech items
+    document.querySelectorAll('.tech-item').forEach(item => {
+      item.style.opacity = '0';
+      item.style.transform = 'translateY(20px)';
+      item.style.transition = 'opacity 0.4s ease, transform 0.4s ease';
+      observer.observe(item);
+    });
+  </script>
+</body>
+</html>
+
