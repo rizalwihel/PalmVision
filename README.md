@@ -33,10 +33,10 @@ PalmVision AI adalah aplikasi berbasis web yang menggunakan kecerdasan buatan (A
 - API endpoint untuk AI processing
 
 ### Browser Requirements
-- Chrome 90+
-- Firefox 88+
-- Safari 14+
-- Edge 90+
+- Chrome 
+- Firefox 
+- Safari 
+- Edge 
 
 ### Mobile Requirements
 - iOS 12+
@@ -47,7 +47,7 @@ PalmVision AI adalah aplikasi berbasis web yang menggunakan kecerdasan buatan (A
 ### 1. Clone Repository
 
 ```bash
-git clone https://github.com/your-username/palmvision-ai.git
+git clone https://github.com/rizalwihel/palmvision-ai.git
 cd palmvision-ai
 ```
 
@@ -151,7 +151,6 @@ Buka file `index.html` di browser modern, atau:
 
 4. **Lihat Hasil**:
    - Nama ilmiah dan umum
-   - Tingkat kepercayaan (accuracy)
    - Deskripsi lengkap
    - Rekomendasi penanganan
    - Tips pencegahan
@@ -161,7 +160,7 @@ Buka file `index.html` di browser modern, atau:
 **Untuk Hasil Terbaik:**
 - ✅ Gunakan pencahayaan alami yang cukup
 - ✅ Pastikan gambar fokus dan tidak blur
-- ✅ ✅ Objek memenuhi 30% frame
+- ✅ Objek memenuhi 30% frame
 - ✅ Latar belakang kontras dengan objek
 - ✅ Ambil dari beberapa sudut
 - ✅ Gunakan resolusi tinggi (minimal 1080p)
@@ -219,10 +218,6 @@ palmvision-ai/
 - **Telepon**: +62 81343145435
 - **Support**: 24/7
 
-### Social Media
-- Twitter: [@PalmVision](https://twitter.com)
-- GitHub: [github.com/palmvision](https://github.com)
-
 ### Bantuan
 Jika mengalami masalah atau memiliki pertanyaan:
 1. Cek bagian FAQ di halaman Cara Penggunaan
@@ -269,7 +264,7 @@ Aplikasi ini dibuat dengan tujuan membantu petani Indonesia dalam identifikasi d
 
 **Current Version:** 1.0.0
 
-**Release Date:** 2025
+**Release Date:**  November 2025
 
 ## 🎯 Roadmap
 
@@ -288,15 +283,9 @@ Aplikasi ini dibuat dengan tujuan membantu petani Indonesia dalam identifikasi d
 4. **Waktu yang Tepat**: Gunakan aplikasi di pagi atau sore hari
 5. **Ikuti Rekomendasi**: Gunakan saran penanganan yang diberikan
 
-## 📚 Referensi
-
-- Dokumentasi API: [Link Dokumentasi]
-- Tutorial Video: [Link Video Tutorial]
-- User Guide: Lihat halaman Cara Penggunaan
-
----
 
 **Made with ❤️ for Indonesian Farmers**
 
 **PalmVision AI** - Teknologi Cerdas untuk Masa Depan Pertanian Indonesia
+
 
